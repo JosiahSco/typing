@@ -92,8 +92,7 @@ export default function Typing() {
         const timeElapsed = Date.now() - timeStarted;
         setFinished(true);
         const correct = document.querySelectorAll('.correct');
-        const adjustedSpeed = ((correct.length / 5)) / (timeElapsed / 1000) * 60;
-
+        const adjustedSpeed = (correct.length / 5) / (timeElapsed / 1000) * 60;
 
         const wpm = document.querySelector('.wpm');
         wpm.innerText = `WPM: ${Math.round(adjustedSpeed)}`;
@@ -219,7 +218,7 @@ export default function Typing() {
                 </div>
                 <textarea 
                  className='inputBox' onPaste={handlePaste} onChange={handleTyping} placeholder='Start Typing...' 
-                 autoFocus autoCapitalize='off' autoCorrect='off' spellCheck='false'
+                 autoFocus autoCapitalize='none' autoCorrect='off' spellCheck='false'
                 >
                 </textarea>
                 <button className='reset' onClick={handleReset}>Reset</button>
