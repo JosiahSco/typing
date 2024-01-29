@@ -61,6 +61,7 @@ export default function Typing() {
             setTimeStarted(Date.now());
             document.querySelector('.retry').classList.remove('buttonDisabled');
             document.querySelector('.retry').disabled = false;
+            console.log(started)
         }
         let typed = e.target.value.split('');
         const characters = document.querySelectorAll('span');
@@ -90,10 +91,7 @@ export default function Typing() {
     const testComplete = () => {
         const timeElapsed = Date.now() - timeStarted;
         setFinished(true);
-        // const characters = document.querySelectorAll('span');
         const correct = document.querySelectorAll('.correct');
-        // const incorrect = document.querySelectorAll('.incorrect');
-        // const speed = (characters.length / 5) / (timeElapsed / 1000) * 60;
         const adjustedSpeed = ((correct.length / 5)) / (timeElapsed / 1000) * 60;
 
 
@@ -111,6 +109,7 @@ export default function Typing() {
         const textarea = document.querySelector('textarea');
         textarea.disabled = false;
         textarea.value = '';
+        textarea.focus();
         document.querySelectorAll('.correct').forEach(char => {
             char.classList.remove('correct');
         });
@@ -129,6 +128,7 @@ export default function Typing() {
         const textarea = document.querySelector('textarea');
         textarea.disabled = false;
         textarea.value = '';
+        textarea.focus();
         document.querySelectorAll('.correct').forEach(char => {
             char.classList.remove('correct');
         });
@@ -166,7 +166,22 @@ export default function Typing() {
         }
         fetchWords();
 
-        
+        // Escape key grabs new words, resets test
+        const handleKeyDown = (event) => {
+            if (event.code === 'Escape') {
+                event.preventDefault();
+                handleReset();
+            } 
+            if (event.code === 'Backquote') {
+                event.preventDefault();
+                handleRetry();
+            }
+            
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
     }, [numWords])
 
  
