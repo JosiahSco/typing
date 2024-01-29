@@ -90,12 +90,15 @@ export default function Typing() {
     const testComplete = () => {
         const timeElapsed = Date.now() - timeStarted;
         setFinished(true);
-        const characters = document.querySelectorAll('span');
-        const speed = (characters.length / 5) / (timeElapsed / 1000) * 60;
-        console.log(speed);
+        // const characters = document.querySelectorAll('span');
+        const correct = document.querySelectorAll('.correct');
+        // const incorrect = document.querySelectorAll('.incorrect');
+        // const speed = (characters.length / 5) / (timeElapsed / 1000) * 60;
+        const adjustedSpeed = ((correct.length / 5)) / (timeElapsed / 1000) * 60;
+
 
         const wpm = document.querySelector('.wpm');
-        wpm.innerText = `WPM: ${Math.round(speed)}`;
+        wpm.innerText = `WPM: ${Math.round(adjustedSpeed)}`;
 
         const accuracy = document.querySelector('.accuracy');
         const numCorrect = document.querySelectorAll('.correct').length;
