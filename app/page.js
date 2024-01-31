@@ -37,9 +37,17 @@ export default function Typing() {
             label.classList.remove('checked');
             label.querySelector('input').disabled = false;
         })
-        e.target.parentElement.classList.add('checked');
-        e.target.parentElement.disabled = true;
-        setNumWords(e.target.parentElement.innerText);
+
+        // A little hack to allow function to be used for keybind as well as radio button
+        let label;
+        if (e.target.parentElement) {
+            label = e.target.parentElement;
+        } else {
+            label = Array.from(labels).find(label => label.innerText == e.target.value);
+        }
+        label.classList.add('checked');
+        label.disabled = true;
+        setNumWords(label.innerText);
 
         const textarea = document.querySelector('textarea');
         textarea.disabled = false;
@@ -91,8 +99,12 @@ export default function Typing() {
     const testComplete = () => {
         const timeElapsed = Date.now() - timeStarted;
         setFinished(true);
+
+        
         const correct = document.querySelectorAll('.correct');
         const adjustedSpeed = (correct.length / 5) / (timeElapsed / 1000) * 60;
+
+        const testingSpeed = (correct.length / 5) / (timeElapsed / 1000) * 60;
 
         const wpm = document.querySelector('.wpm');
         wpm.innerText = `WPM: ${Math.round(adjustedSpeed)}`;
@@ -167,13 +179,28 @@ export default function Typing() {
 
         // Escape key grabs new words, resets test
         const handleKeyDown = (event) => {
-            if (event.code === 'Escape') {
-                event.preventDefault();
-                handleReset();
-            } 
-            if (event.code === 'Backquote') {
-                event.preventDefault();
-                handleRetry();
+            // numbers and ` are reserved for shortcuts, so dont allow them to be typed
+            if (/^[0-9`]$/.test(event.key)) event.preventDefault();
+
+            switch (event.code) {
+                case 'Escape':
+                    handleReset();
+                    break;
+                case 'Backquote':
+                    handleRetry();
+                    break;
+                case 'Digit1':
+                    handleRadioChange({target: {value: '10'}});
+                    break;
+                case 'Digit2':
+                    handleRadioChange({target: {value: '25'}});
+                    break;
+                case 'Digit3':
+                    handleRadioChange({target: {value: '50'}});
+                    break;
+                case 'Digit4':
+                    handleRadioChange({target: {value: '100'}});
+                    break;
             }
             
         };
