@@ -69,7 +69,6 @@ export default function Typing() {
             setTimeStarted(Date.now());
             document.querySelector('.retry').classList.remove('buttonDisabled');
             document.querySelector('.retry').disabled = false;
-            console.log(started)
         }
         let typed = e.target.value.split('');
         const characters = document.querySelectorAll('span');
