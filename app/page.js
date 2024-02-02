@@ -17,14 +17,18 @@ export default function Typing() {
         .map((char, key) => (
             <span key={key}>{char}</span>
         ));
-        setCharacterSpans(spans);
-
         if (numWords == 100) {
             document.querySelector('.wordBank').classList.add('smallerText');
         } else {
             document.querySelector('.wordBank').classList.remove('smallerText');
         }
+        setCharacterSpans(spans);
+
     }, [wordbank]);
+
+    useEffect(() => {
+        window.scrollTo({top: 9999, behavior: 'smooth'});
+    }, [characterSpans]);
 
     const handlePaste = (e) => {
         e.preventDefault();
@@ -233,11 +237,30 @@ export default function Typing() {
                             100    
                         </label>
                     </div>
-                    <div className='statistics'>
-                        <p className='accuracy'>🎯 XX%</p>
-                        <p className='wpm'>WPM: XX</p>
+                    <div className='rightInfo'>
+                        <div className='statistics'>
+                            <p className='accuracy'>🎯 XX%</p>
+                            <p className='wpm'>WPM: XX</p>
+                        </div>
+                        <button onClick={() => {document.querySelector('dialog').showModal()}}>?</button>
                     </div>
                 </div>
+                <dialog>
+                    <h2>Typing...</h2>
+                    <p>This is a simple typing test to measure your speed and accuracy.</p>
+                    <br></br>
+                    <hr></hr>
+                    <br></br>
+                    <h2>Keyboard Shortcuts</h2>
+                    <p>Escape: Start test with new wordbank</p>
+                    <p>~: Restart test with same wordbank</p>
+                    <p>1: Set number of words to 10</p>
+                    <p>2: Set number of words to 25</p>
+                    <p>3: Set number of words to 50</p>
+                    <p>4: Set number of words to 100</p>
+                    <br></br>
+                    <button onClick={() => {document.querySelector('dialog').close()}}>Close</button>
+                </dialog>
                 <hr></hr>
                 <div className='wordBank'>
                     {characterSpans}
