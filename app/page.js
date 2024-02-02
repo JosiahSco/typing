@@ -176,7 +176,18 @@ export default function Typing() {
                 method: 'POST',
                 body: JSON.stringify(numWords)
             });
-            setWordBank(await response.json());
+            let wordBank;
+            try {
+                wordBank = await response.json();
+            } catch (error) {
+                if (error instanceof SyntaxError) {
+                    wordBank = ['no', 'internet', 'connection', 'available', 'please', 'try', 'again'];
+                }
+                console.error('Error fetching wordbank:', error);
+
+            }
+            
+            setWordBank(wordBank);
         }
         fetchWords();
 

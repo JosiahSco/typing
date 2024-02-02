@@ -149,17 +149,19 @@ hr {
 .rightInfo {
     display: flex;
     width: auto;
+    align-items: center;
 }
 
 .infoRow button {
-    font-size: 23px;
-    padding: 0px 10px;
+    height: 26px;
+    font-size: 19px;
+    padding: 2px 8px;
     border-radius: 50%;
     font-weight: bold;
 
-    background-color: #222a31;
+    /* background-color: #222a31;
     background-color: gray;
-    background-color: darkgreen;
+    background-color: darkgreen; */
     background-color: #406ba6;
     cursor: pointer;
 }
